@@ -116,4 +116,9 @@ if ! shopt -oq posix; then
   fi
 fi
 export PATH="$HOME/.local/npm/bin:$PATH"
-export PATH="$HOME/.local/npm/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+if command -v starship >/dev/null 2>&1; then
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
+    eval "$(starship init bash)"
+fi

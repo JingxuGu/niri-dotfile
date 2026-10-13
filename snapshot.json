@@ -1,238 +1,67 @@
 {
-  "date": "2026-10-13T13:40:19",
+  "date": "2026-10-13",
+  "kind": "adapted configuration template",
   "source_home": "/home/grainrain",
-  "system": "Ubuntu 26.04.1 LTS",
-  "scope": "desktop and shell configuration; no caches, histories, binaries, fonts, wallpaper assets, credentials, or Rime user dictionaries",
+  "system": "Ubuntu 22.04 LTS",
+  "desktop": "GNOME 42 / Mutter / Ubuntu Dock",
+  "scope": "desktop and shell configuration adapted from main; no private data, histories, binaries or wallpaper assets",
   "files": [
     {
-      "path": "home/.zshrc",
-      "source": "/home/grainrain/.zshrc",
-      "bytes": 810
+      "path": "home/.bashrc"
     },
     {
-      "path": "home/.zprofile",
-      "source": "/home/grainrain/.zprofile",
-      "bytes": 102
+      "path": "home/.profile"
     },
     {
-      "path": "home/.profile",
-      "source": "/home/grainrain/.profile",
-      "bytes": 807
+      "path": "home/.zshrc"
     },
     {
-      "path": "home/.bashrc",
-      "source": "/home/grainrain/.bashrc",
-      "bytes": 3853
+      "path": "home/.zprofile"
     },
     {
-      "path": "home/.xinputrc",
-      "source": "/home/grainrain/.xinputrc",
-      "bytes": 110
+      "path": "home/.xinputrc"
     },
     {
-      "path": "home/.config/niri/config.kdl",
-      "source": "/home/grainrain/.config/niri/config.kdl",
-      "bytes": 28577
+      "path": "home/.config/autostart/org.fcitx.Fcitx5.desktop"
     },
     {
-      "path": "home/.config/kitty/kitty.conf",
-      "source": "/home/grainrain/.config/kitty/kitty.conf",
-      "bytes": 844
+      "path": "home/.config/fastfetch/config.jsonc"
     },
     {
-      "path": "home/.config/kitty/dank-theme.conf",
-      "source": "/home/grainrain/.config/kitty/dank-theme.conf",
-      "bytes": 465
+      "path": "home/.config/fastfetch/ubuntu-ascii.txt"
     },
     {
-      "path": "home/.config/kitty/dank-tabs.conf",
-      "source": "/home/grainrain/.config/kitty/dank-tabs.conf",
-      "bytes": 828
+      "path": "home/.config/fcitx5/profile"
     },
     {
-      "path": "home/.config/starship.toml",
-      "source": "/home/grainrain/.config/starship.toml",
-      "bytes": 1180
+      "path": "home/.config/fcitx5/conf/classicui.conf"
     },
     {
-      "path": "home/.config/fuzzel/fuzzel.ini",
-      "source": "/home/grainrain/.config/fuzzel/fuzzel.ini",
-      "bytes": 595
+      "path": "home/.config/kitty/kitty.conf"
     },
     {
-      "path": "home/.config/fastfetch/config.jsonc",
-      "source": "/home/grainrain/.config/fastfetch/config.jsonc",
-      "bytes": 1796
+      "path": "home/.config/kitty/colors.conf"
     },
     {
-      "path": "home/.config/fastfetch/ubuntu-ascii.txt",
-      "source": "/home/grainrain/.config/fastfetch/ubuntu-ascii.txt",
-      "bytes": 454
+      "path": "home/.config/starship.toml"
     },
     {
-      "path": "home/.config/satty/config.toml",
-      "source": "/home/grainrain/.config/satty/config.toml",
-      "bytes": 534
+      "path": "home/.local/share/fcitx5/rime/default.custom.yaml"
     },
     {
-      "path": "home/.config/fcitx5/profile",
-      "source": "/home/grainrain/.config/fcitx5/profile",
-      "bytes": 242
+      "path": "home/.local/share/fcitx5/rime/double_pinyin_flypy.custom.yaml"
     },
     {
-      "path": "home/.config/fcitx5/conf/classicui.conf",
-      "source": "/home/grainrain/.config/fcitx5/conf/classicui.conf",
-      "bytes": 854
+      "path": "home/.local/share/fcitx5/rime/double_pinyin_flypy.schema.yaml"
     },
     {
-      "path": "home/.config/autostart/org.fcitx.Fcitx5.desktop",
-      "source": "/home/grainrain/.config/autostart/org.fcitx.Fcitx5.desktop",
-      "bytes": 127
+      "path": "home/.local/share/fcitx5/themes/macOS-dark/theme.conf"
     },
     {
-      "path": "home/.local/share/fcitx5/rime/default.custom.yaml",
-      "source": "/home/grainrain/.local/share/fcitx5/rime/default.custom.yaml",
-      "bytes": 87
+      "path": "home/.local/share/fcitx5/themes/macOS-dark/panel.svg"
     },
     {
-      "path": "home/.local/share/fcitx5/rime/double_pinyin_flypy.schema.yaml",
-      "source": "/home/grainrain/.local/share/fcitx5/rime/double_pinyin_flypy.schema.yaml",
-      "bytes": 2974
-    },
-    {
-      "path": "home/.local/share/fcitx5/rime/double_pinyin_flypy.custom.yaml",
-      "source": "/home/grainrain/.local/share/fcitx5/rime/double_pinyin_flypy.custom.yaml",
-      "bytes": 45
-    },
-    {
-      "path": "home/.local/share/fcitx5/themes/macOS-dark/theme.conf",
-      "source": "/home/grainrain/.local/share/fcitx5/themes/macOS-dark/theme.conf",
-      "bytes": 4535
-    },
-    {
-      "path": "home/.local/share/fcitx5/themes/macOS-dark/panel.svg",
-      "source": "/home/grainrain/.local/share/fcitx5/themes/macOS-dark/panel.svg",
-      "bytes": 190
-    },
-    {
-      "path": "home/.local/share/fcitx5/themes/macOS-dark/highlight.svg",
-      "source": "/home/grainrain/.local/share/fcitx5/themes/macOS-dark/highlight.svg",
-      "bytes": 218
-    },
-    {
-      "path": "home/.config/DankMaterialShell/settings.json",
-      "source": "/home/grainrain/.config/DankMaterialShell/settings.json",
-      "bytes": 3187
-    },
-    {
-      "path": "home/.config/DankMaterialShell/plugin_settings.json",
-      "source": "/home/grainrain/.config/DankMaterialShell/plugin_settings.json",
-      "bytes": 842
-    },
-    {
-      "path": "home/.config/DankMaterialShell/plugins.lock.json",
-      "source": "/home/grainrain/.config/DankMaterialShell/plugins.lock.json",
-      "bytes": 200
-    },
-    {
-      "path": "home/.config/DankMaterialShell/wallpaper-engine-backend",
-      "source": "/home/grainrain/.config/DankMaterialShell/wallpaper-engine-backend",
-      "bytes": 6
-    },
-    {
-      "path": "home/.config/haru/config.json",
-      "source": "/home/grainrain/.config/haru/config.json",
-      "bytes": 1030
-    },
-    {
-      "path": "home/.config/haru/proxychains.conf",
-      "source": "/home/grainrain/.config/haru/proxychains.conf",
-      "bytes": 140
-    },
-    {
-      "path": "home/.local/bin/haru",
-      "source": "/home/grainrain/.local/bin/haru",
-      "bytes": 532
-    },
-    {
-      "path": "home/.local/bin/linux-wallpaperengine",
-      "source": "/home/grainrain/.local/bin/linux-wallpaperengine",
-      "bytes": 1684
-    },
-    {
-      "path": "home/.local/bin/screenshot",
-      "source": "/home/grainrain/.local/bin/screenshot",
-      "bytes": 3059
-    },
-    {
-      "path": "home/.local/bin/install-screenshot-tools",
-      "source": "/home/grainrain/.local/bin/install-screenshot-tools",
-      "bytes": 1166
-    },
-    {
-      "path": "home/.config/alacritty/dank-theme.toml",
-      "source": "/home/grainrain/.config/alacritty/dank-theme.toml",
-      "bytes": 530
-    },
-    {
-      "path": "home/.config/gtk-3.0/dank-colors.css",
-      "source": "/home/grainrain/.config/gtk-3.0/dank-colors.css",
-      "bytes": 2065
-    },
-    {
-      "path": "home/.config/gtk-4.0/dank-colors.css",
-      "source": "/home/grainrain/.config/gtk-4.0/dank-colors.css",
-      "bytes": 2065
-    },
-    {
-      "path": "home/.config/qt6ct/colors/matugen.conf",
-      "source": "/home/grainrain/.config/qt6ct/colors/matugen.conf",
-      "bytes": 4067
-    },
-    {
-      "path": "home/.config/niri/dms/alttab.kdl",
-      "source": "/home/grainrain/.config/niri/dms/alttab.kdl",
-      "bytes": 199
-    },
-    {
-      "path": "home/.config/niri/dms/binds.kdl",
-      "source": "/home/grainrain/.config/niri/dms/binds.kdl",
-      "bytes": 0
-    },
-    {
-      "path": "home/.config/niri/dms/colors.kdl",
-      "source": "/home/grainrain/.config/niri/dms/colors.kdl",
-      "bytes": 735
-    },
-    {
-      "path": "home/.config/niri/dms/cursor.kdl",
-      "source": "/home/grainrain/.config/niri/dms/cursor.kdl",
-      "bytes": 0
-    },
-    {
-      "path": "home/.config/niri/dms/input.kdl",
-      "source": "/home/grainrain/.config/niri/dms/input.kdl",
-      "bytes": 278
-    },
-    {
-      "path": "home/.config/niri/dms/layout.kdl",
-      "source": "/home/grainrain/.config/niri/dms/layout.kdl",
-      "bytes": 363
-    },
-    {
-      "path": "home/.config/niri/dms/outputs.kdl",
-      "source": "/home/grainrain/.config/niri/dms/outputs.kdl",
-      "bytes": 0
-    },
-    {
-      "path": "home/.config/niri/dms/windowrules.kdl",
-      "source": "/home/grainrain/.config/niri/dms/windowrules.kdl",
-      "bytes": 238
-    },
-    {
-      "path": "home/.config/niri/dms/wpblur.kdl",
-      "source": "/home/grainrain/.config/niri/dms/wpblur.kdl",
-      "bytes": 219
+      "path": "home/.local/share/fcitx5/themes/macOS-dark/highlight.svg"
     }
   ]
 }

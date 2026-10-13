@@ -1,0 +1,69 @@
+{
+  "schemas": [
+    {
+      "id": "org.gnome.desktop.interface",
+      "values": {
+        "color-scheme": "'prefer-dark'",
+        "gtk-theme": "'Yaru-dark'",
+        "icon-theme": "'Yaru-dark'",
+        "cursor-theme": "'Yaru'",
+        "clock-format": "'24h'",
+        "clock-show-weekday": "true",
+        "show-battery-percentage": "true",
+        "enable-hot-corners": "false"
+      }
+    },
+    {
+      "id": "org.gnome.desktop.wm.preferences",
+      "values": {
+        "button-layout": "'appmenu:minimize,maximize,close'"
+      }
+    },
+    {
+      "id": "org.gnome.mutter",
+      "values": {
+        "dynamic-workspaces": "true",
+        "edge-tiling": "true"
+      }
+    },
+    {
+      "id": "org.gnome.desktop.wm.keybindings",
+      "values": {
+        "close": "['<Super>q', '<Alt>F4']",
+        "maximize": "['<Super>Up']",
+        "unmaximize": "['<Super>Down']",
+        "switch-input-source": "[]",
+        "switch-input-source-backward": "[]"
+      }
+    },
+    {
+      "id": "org.gnome.shell.keybindings",
+      "values": {
+        "toggle-overview": "['<Super>s', '<Super>space']",
+        "show-screenshot-ui": "['Print', 'F1']",
+        "screenshot": "['<Shift>Print', '<Control>Print']",
+        "screenshot-window": "['<Alt>Print']"
+      }
+    },
+    {
+      "id": "org.gnome.shell.extensions.dash-to-dock",
+      "optional": true,
+      "values": {
+        "dock-position": "'BOTTOM'",
+        "extend-height": "false",
+        "dash-max-icon-size": "40",
+        "dock-fixed": "false",
+        "intellihide": "true",
+        "show-trash": "false"
+      }
+    }
+  ],
+  "custom_keybindings": [
+    {
+      "path": "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ubuntu-dotfile-kitty/",
+      "name": "Kitty",
+      "command": "kitty",
+      "binding": "<Super>t"
+    }
+  ]
+}
