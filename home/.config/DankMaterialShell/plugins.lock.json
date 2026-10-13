@@ -1,0 +1,9 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "mpvpaperWallpaper": {
+      "repo": "https://github.com/kanghengliu/dms-mpvpaper",
+      "commit": "36e0a3371937b6e76a45daa4758ba112ed77ee64"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Region / all displays / focused Niri window -> Satty -> clipboard and PNG.
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+
+fail() {
+    printf 'screenshot: %s\n' "$*" >&2
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -a Screenshot '截图未完成' "$*" || true
+    fi
+    exit 1
+}
+
+mode=${1:-region}
+case "$mode" in
+    region|full|window) ;;
+    -h|--help)
+        printf 'Usage: screenshot [region|full|window]\nEnter in Satty: copy, save and close. Escape: cancel.\n'
+        exit 0 ;;
+    *) fail "未知模式：$mode（可用 region、full、window）" ;;
+esac
+
+tools=(satty wl-copy flock)
+case "$mode" in
+    region) tools+=(grim slurp) ;;
+    full) tools+=(grim) ;;
+    window) tools+=(niri python3) ;;
+esac
+missing=()
+for tool in "${tools[@]}"; do
+    command -v "$tool" >/dev/null 2>&1 || missing+=("$tool")
+done
+((${#missing[@]} == 0)) || fail "缺少工具：${missing[*]}。请先运行 ~/.local/bin/install-screenshot-tools"
+[[ -n ${WAYLAND_DISPLAY:-} && -n ${XDG_RUNTIME_DIR:-} ]] || fail '请在 Wayland 桌面会话中运行。'
+
+# Avoid launching overlapping selectors/editors when a key is pressed twice.
+exec 9>"$XDG_RUNTIME_DIR/screenshot.lock"
+flock -n 9 || exit 0
+tmpdir=$(mktemp -d "$XDG_RUNTIME_DIR/screenshot.XXXXXX")
+trap 'rm -rf -- "$tmpdir"' EXIT
+image="$tmpdir/capture.png"
+savedir="$HOME/Pictures/Screenshots"
+mkdir -p "$savedir"
+destination="$savedir/Screenshot-$(date '+%Y-%m-%d_%H-%M-%S_%N').png"
+
+case "$mode" in
+    region)
+        if ! geometry=$(slurp -c '#d0bcffff' -w 2); then
+            exit 0 # Escape while selecting is a normal cancellation.
+        fi
+        [[ -n $geometry ]] || exit 0
+        grim -g "$geometry" "$image" || fail '区域截图失败。'
+        ;;
+    full)
+        grim "$image" || fail '全屏截图失败。'
+        ;;
+    window)
+        niri msg action screenshot-window --show-pointer false --path "$image" || fail '当前窗口截图失败。'
+        # Niri writes the PNG asynchronously. Wait for the complete IEND chunk,
+        # rather than opening an empty or partially written file in Satty.
+        python3 - "$image" <<'PY' || fail '等待窗口截图超时。请确认当前有聚焦窗口。'
+import pathlib, sys, time
+path = pathlib.Path(sys.argv[1])
+deadline = time.monotonic() + 5
+while time.monotonic() < deadline:
+    try:
+        with path.open('rb') as stream:
+            if stream.read(8) == b'\x89PNG\r\n\x1a\n':
+                stream.seek(-12, 2)
+                if stream.read() == b'\x00\x00\x00\x00IEND\xaeB`\x82':
+                    sys.exit(0)
+    except (OSError, ValueError):
+        pass
+    time.sleep(0.05)
+sys.exit(1)
+PY
+        ;;
+esac
+[[ -s $image ]] || fail '没有生成截图。'
+# Keep the lock in this parent shell only. Satty launches wl-copy, which
+# may keep running after the editor exits; it must not inherit descriptor 9.
+satty --config "$HOME/.config/satty/config.toml" --filename "$image" --output-filename "$destination" 9>&- || fail 'Satty 编辑器启动或编辑失败。'

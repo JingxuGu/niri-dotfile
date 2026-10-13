@@ -1,0 +1,9 @@
+#!/bin/sh
+export KIRIE_WE_ASSETS=/home/grainrain/.local/share/haru/wallpaper-engine/assets
+export KIRIE_BINARY=/home/grainrain/.local/share/wallpaper-integration/haru-preview-only
+export HTTP_PROXY=http://127.0.0.1:7897
+export HTTPS_PROXY=http://127.0.0.1:7897
+export ALL_PROXY=socks5h://127.0.0.1:7897
+export PROXYCHAINS_CONF_FILE=/home/grainrain/.config/haru/proxychains.conf
+export LD_PRELOAD=/home/grainrain/.local/lib/haru/proxychains/usr/lib/x86_64-linux-gnu/libproxychains.so.4
+exec /home/grainrain/.local/lib/haru/haru "$@"

@@ -1,0 +1,21 @@
+# Local backups, shell history, caches and private state
+*.bak*
+*.before-*
+*.log
+*.sock
+__pycache__/
+.DS_Store
+.env
+.env.*
+.ssh/
+.aws/
+.gnupg/
+.cache/
+.zsh_history
+.bash_history
+**/*.userdb/
+**/rime/build/
+**/rime/sync/
+**/rime/user.yaml
+**/rime/installation.yaml
+**/cached_layouts

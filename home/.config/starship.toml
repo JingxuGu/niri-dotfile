@@ -1,0 +1,58 @@
+# Compact, single-line development prompt.
+add_newline = false
+format = "$hostname$directory$git_branch$git_status$python$conda$cmd_duration$character"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+read_only = " ro"
+
+[git_branch]
+symbol = ""
+format = "[$branch]($style) "
+style = "bold purple"
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "yellow"
+conflicted = "="
+ahead = ">${count}"
+behind = "<${count}"
+diverged = "><${ahead_count}/${behind_count}"
+untracked = "?${count}"
+stashed = "*${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "r${count}"
+deleted = "x${count}"
+
+[python]
+symbol = ""
+format = "([venv:$virtualenv]($style) )"
+style = "green"
+detect_extensions = []
+detect_files = []
+detect_folders = []
+
+[conda]
+symbol = ""
+format = "[conda:$environment]($style) "
+style = "green"
+ignore_base = false
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "dimmed yellow"
+
+[hostname]
+ssh_only = true
+ssh_symbol = ""
+format = "[$hostname]($style) "
+style = "bold blue"
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vimcmd_symbol = "[<](bold green)"

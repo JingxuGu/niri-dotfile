@@ -1,0 +1,38 @@
+{
+  "install_dir": "/home/grainrain/Pictures/Wallpapers/wallpaper-engine",
+  "socket": "/home/grainrain/.local/state/wallpaper-integration/haru-desktop-disabled.sock",
+  "adult": false,
+  "per_page": 24,
+  "fit_per_page": true,
+  "extra_libraries": [
+    "/home/grainrain/Pictures/Wallpapers/wallpaper-engine"
+  ],
+  "screens": {
+    "DP-2": "/home/grainrain/Pictures/Wallpapers/wallpaper-engine/steamapps/workshop/content/431960/3299228616"
+  },
+  "renderer_web": "webkit",
+  "offer_renderer": false,
+  "infinite_scroll": false,
+  "renderer": {
+    "fps": 30,
+    "battery_fps": 30,
+    "render_scale": 1.0,
+    "playback_speed": 1.0,
+    "volume": 100,
+    "mute": false,
+    "scaling": "fill",
+    "clamp": "clamp",
+    "disable_mouse": false,
+    "interactive": false,
+    "disable_parallax": false,
+    "disable_particles": false,
+    "no_automute": false,
+    "no_audio_processing": false,
+    "no_fullscreen_pause": false,
+    "focus_x": 0.0,
+    "focus_y": 0.0,
+    "gpu": ""
+  },
+  "auto_update": false,
+  "beta": false
+}

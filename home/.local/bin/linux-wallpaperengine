@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+import os,sys,subprocess,tempfile,hashlib
+from pathlib import Path
+args=sys.argv[1:]
+backend=Path('/home/grainrain/.config/DankMaterialShell/wallpaper-engine-backend').read_text().strip()
+if backend!='kirie':
+    real='/home/grainrain/.local/lib/linux-wallpaperengine/linux-wallpaperengine'
+    os.execv(real,[real,*args])
+real='/home/grainrain/.local/lib/haru/kirie-renderer'
+if '--assets-dir' in args:
+    i=args.index('--assets-dir');os.environ['KIRIE_WE_ASSETS']=args[i+1]
+output=args[args.index('--screenshot')+1] if '--screenshot' in args else None
+live=[];offline=[];i=0;screen='all'
+while i<len(args):
+    a=args[i]
+    if a in ('--screenshot','--screenshot-delay','--assets-dir'):
+        i+=2;continue
+    if a in ('--screen-root','--screen-span','--layer','--window'):
+        if a in ('--screen-root','--screen-span'):screen=args[i+1]
+        live.extend(args[i:i+2]);i+=2;continue
+    live.append(a);offline.append(a);i+=1
+if output:
+    target=Path(output);target.parent.mkdir(parents=True,exist_ok=True)
+    fd,tmp=tempfile.mkstemp(prefix='.kirie-',suffix=target.suffix,dir=target.parent);os.close(fd)
+    env=os.environ.copy();env.pop('WAYLAND_DISPLAY',None);env.pop('DISPLAY',None)
+    try:
+        subprocess.run([real,*offline,'--screenshot',tmp],env=env,check=True,timeout=40)
+        os.replace(tmp,target)
+    finally:
+        Path(tmp).unlink(missing_ok=True)
+if '--screen-root' in live or '--screen-span' in live:
+    sock=os.environ.get('XDG_RUNTIME_DIR','/tmp')+'/dms-kirie-'+hashlib.sha256(screen.encode()).hexdigest()[:12]+'.sock'
+    live.extend(['--control-socket',sock])
+os.execve(real,['linux-wallpaperengine',*live],os.environ)
