@@ -32,7 +32,7 @@ sudo apt install git python3 python3-gi kitty zsh bash-completion \
   fonts-noto fonts-noto-cjk
 ```
 
-使用标准 Ubuntu Desktop 的 GNOME 会话。Ubuntu Dock 使用系统自带扩展，不下载第三方 GNOME 扩展，也不覆盖已有的扩展启用清单。
+使用标准 Ubuntu Desktop 的 GNOME 会话。Ubuntu Dock 使用系统自带扩展。默认配置不下载第三方 GNOME 扩展，也不覆盖已有的扩展启用清单；下方的毛玻璃配置单独安装和应用。
 
 字体从 [Nerd Fonts 官方发布页](https://github.com/ryanoasis/nerd-fonts/releases)下载 JetBrainsMono 包，解压到 `~/.local/share/fonts/` 后执行 `fc-cache -f`。也可以把 `home/.config/kitty/kitty.conf` 中的字体改为本机已有等宽字体。
 
@@ -92,7 +92,28 @@ GNOME 的 Super + Space 输入源切换已释放给概览；Fcitx5 使用 Ctrl +
 
 Kitty 默认使用 X11，在 GNOME Wayland 会话中通过 XWayland 运行，以兼容 Jammy 的 Kitty 0.21 与 Fcitx5 输入。需要原生 Wayland 时可改为 `linux_display_server wayland`，但需自行确认输入法支持。GNOME Shell 原生界面的候选窗，以及部分 Wayland 应用的输入法可能需要额外适配；参见 [Fcitx 官方 Wayland 文档](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)。遇到候选窗或输入问题可在登录界面选择“Ubuntu on Xorg”。
 
-GNOME 默认不提供 Niri 的窗口背景模糊效果；本模板不依赖模糊扩展。壁纸沿用目标系统当前设置。
+GNOME 默认不提供 Niri 的窗口背景模糊效果。壁纸沿用目标系统当前设置。
+
+## 顶栏与 Overview 毛玻璃
+
+使用 [Blur my Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/)；GNOME 42 对应官方版本 47（version tag 42627），不是面向更新 GNOME 的最新版本。可在已安装的 Extension Manager 中搜索并安装，或下载兼容包：
+
+```bash
+curl -fL 'https://extensions.gnome.org/download-extension/blur-my-shell@aunetx.shell-extension.zip?version_tag=42627' \
+  -o /tmp/blur-my-shell-v47.zip
+gnome-extensions install /tmp/blur-my-shell-v47.zip
+
+# 仅预览这个效果配置
+/usr/bin/python3 gnome.py --config gnome/blur-my-shell.json
+# 备份并应用，只处理这个效果配置
+/usr/bin/python3 gnome.py --config gnome/blur-my-shell.json --apply
+```
+
+该配置将顶栏背景设为透明，在壁纸上应用静态模糊（半径 30、亮度 0.8）；Overview 背景使用半径 40、亮度 0.65。Overview 中顶栏复用已有模糊背景，避免重复叠加。应用菜单/文件夹和应用窗口、Dock、截图界面、锁屏的额外模糊关闭，后续可在扩展首选项调整。
+
+工具会读取扩展私有 schemas，保留其他扩展列表并追加 Blur my Shell。备份及撤销方式与上文 `gnome.py --undo` 相同；不会重新应用基础主题、Dock 或快捷键模板。
+
+第一次通过命令行安装后，当前 GNOME Shell 可能尚未发现扩展。Wayland 会话需要注销后重新登录；配置会在新会话中自动生效。可在 Extension Manager 查看开关和首选项，或运行 `gnome-extensions info blur-my-shell@aunetx` 确认状态为 ENABLED。
 
 ## 快捷键
 

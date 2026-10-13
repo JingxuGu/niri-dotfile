@@ -1,0 +1,53 @@
+{
+  "enable_extensions": ["blur-my-shell@aunetx"],
+  "schemas": [
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.panel",
+      "values": {
+        "blur": "true",
+        "customize": "true",
+        "sigma": "30",
+        "brightness": "0.8",
+        "static-blur": "true",
+        "override-background": "true",
+        "style-panel": "0",
+        "override-background-dynamically": "false",
+        "unblur-in-overview": "true"
+      }
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.overview",
+      "values": {
+        "blur": "true",
+        "customize": "true",
+        "sigma": "40",
+        "brightness": "0.65",
+        "style-components": "0"
+      }
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.appfolder",
+      "values": {"blur": "false", "style-dialogs": "0"}
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.applications",
+      "values": {"blur": "false"}
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.dash-to-dock",
+      "values": {"blur": "false"}
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.screenshot",
+      "values": {"blur": "false"}
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.lockscreen",
+      "values": {"blur": "false"}
+    },
+    {
+      "id": "org.gnome.shell.extensions.blur-my-shell.window-list",
+      "values": {"blur": "false"}
+    }
+  ]
+}

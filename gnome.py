@@ -12,7 +12,17 @@ REPO = Path(__file__).resolve().parent
 
 
 def settings_for(schema_id, path=None, optional=False):
-    schema = Gio.SettingsSchemaSource.get_default().lookup(schema_id, True)
+    source = Gio.SettingsSchemaSource.get_default()
+    schema = source.lookup(schema_id, True)
+    # User extensions ship schemas privately rather than installing them system-wide.
+    if schema is None:
+        root = Path(os.environ.get('XDG_DATA_HOME', Path.home() / '.local/share'))
+        for directory in sorted((root / 'gnome-shell/extensions').glob('*/schemas')):
+            if (directory / 'gschemas.compiled').is_file():
+                local = Gio.SettingsSchemaSource.new_from_directory(str(directory), source, False)
+                schema = local.lookup(schema_id, False)
+                if schema is not None:
+                    break
     if schema is None:
         if optional:
             print(f'Skip optional schema: {schema_id}')
@@ -43,8 +53,8 @@ def add_change(changes, settings, key, text, optional=False):
     changes.append((settings, key, text, value))
 
 
-def plan_settings():
-    config = json.loads((REPO / 'gnome/settings.json').read_text())
+def plan_settings(config_path=None):
+    config = json.loads((config_path or REPO / 'gnome/settings.json').read_text())
     changes = []
     for group in config['schemas']:
         optional = group.get('optional', False)
@@ -52,6 +62,19 @@ def plan_settings():
         if settings is not None:
             for key, text in group['values'].items():
                 add_change(changes, settings, key, text, optional)
+    if config.get('enable_extensions'):
+        shell = settings_for('org.gnome.shell')
+        enabled = shell.get_strv('enabled-extensions')
+        wanted = config['enable_extensions']
+        for uuid in wanted:
+            if uuid not in enabled:
+                enabled.append(uuid)
+        disabled = [uuid for uuid in shell.get_strv('disabled-extensions') if uuid not in wanted]
+        add_change(changes, shell, 'enabled-extensions', GLib.Variant('as', enabled).print_(True))
+        add_change(changes, shell, 'disabled-extensions', GLib.Variant('as', disabled).print_(True))
+        add_change(changes, shell, 'disable-user-extensions', 'false')
+    if not config.get('custom_keybindings'):
+        return changes
     media = settings_for('org.gnome.settings-daemon.plugins.media-keys')
     paths = media.get_strv('custom-keybindings')
     for binding in config['custom_keybindings']:
@@ -123,12 +146,14 @@ def apply_settings(changes, backup_root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--apply', action='store_true', help='write settings; default: preview')
-    parser.add_argument('--undo', type=Path, help='preview/restore managed keys from a backup')
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument('--undo', type=Path, help='preview/restore managed keys from a backup')
+    selection.add_argument('--config', type=Path, help='use a separate GNOME settings profile')
     args = parser.parse_args()
     if args.apply and os.environ.get('GSETTINGS_BACKEND', 'dconf') == 'dconf' and not os.environ.get('DBUS_SESSION_BUS_ADDRESS'):
         parser.error('Run from a terminal in your GNOME desktop session, without sudo.')
     try:
-        changes = plan_undo(args.undo) if args.undo else plan_settings()
+        changes = plan_undo(args.undo) if args.undo else plan_settings(args.config)
         describe(changes)
         print(f'{len(changes)} GNOME setting(s) would change.')
         if args.apply:

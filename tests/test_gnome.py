@@ -1,5 +1,6 @@
 from contextlib import redirect_stdout
 from io import StringIO
+import json
 import os
 from pathlib import Path
 import sys
@@ -13,6 +14,37 @@ import gnome
 
 
 class GnomeTests(unittest.TestCase):
+    def test_separate_profile_preserves_other_extensions_and_avoids_shortcuts(self):
+        shell = gnome.settings_for('org.gnome.shell')
+        original = {key: shell.get_user_value(key) for key in (
+            'enabled-extensions', 'disabled-extensions', 'disable-user-extensions')}
+        shell.set_strv('enabled-extensions', ['other.extension'])
+        shell.set_strv('disabled-extensions', ['wanted.extension', 'other.disabled'])
+        shell.set_boolean('disable-user-extensions', True)
+        try:
+            with tempfile.TemporaryDirectory() as directory, redirect_stdout(StringIO()):
+                root = Path(directory)
+                profile = root / 'profile.json'
+                profile.write_text(json.dumps({'schemas': [], 'enable_extensions': ['wanted.extension']}))
+                changes = gnome.plan_settings(profile)
+                self.assertEqual(len(changes), 3)
+                self.assertTrue(all(setting.props.schema_id == 'org.gnome.shell' for setting, _, _, _ in changes))
+                gnome.apply_settings(changes, root / 'backup')
+                self.assertEqual(shell.get_strv('enabled-extensions'), ['other.extension', 'wanted.extension'])
+                self.assertEqual(shell.get_strv('disabled-extensions'), ['other.disabled'])
+                self.assertFalse(shell.get_boolean('disable-user-extensions'))
+                self.assertEqual(gnome.plan_settings(profile), [])
+                gnome.apply_settings(gnome.plan_undo(root / 'backup/gnome-settings.json'), root / 'undo')
+                self.assertEqual(shell.get_strv('enabled-extensions'), ['other.extension'])
+                self.assertEqual(shell.get_strv('disabled-extensions'), ['wanted.extension', 'other.disabled'])
+                self.assertTrue(shell.get_boolean('disable-user-extensions'))
+        finally:
+            for key, value in original.items():
+                if value is None:
+                    shell.reset(key)
+                else:
+                    shell.set_value(key, value)
+
     def test_apply_preserves_custom_shortcuts_and_undo_restores_defaults(self):
         interface = gnome.settings_for('org.gnome.desktop.interface')
         interface.set_string('gtk-theme', 'test-existing-theme')
